@@ -1,0 +1,26 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Office temp files
+~$*.docx
+~$*.xlsx
+~$*.pptx
+*.tmp
+
+# Local drafts and working notes not meant for publication
+/_drafts/
+/_scratch/
+*.draft.md
+
+# Exports
+/export/
+*.pdf
+!docs/**/*.pdf
