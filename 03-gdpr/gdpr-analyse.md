@@ -1,148 +1,127 @@
-# 03 — GDPR-analyse
+# GDPR-analyse
 
 | | |
 |---|---|
-| **Dokument** | Personvernanalyse for Mjøsdata AS |
-| **Dokumenteier** | Personvernkontakt |
-| **Godkjent av** | Daglig leder |
-| **Versjon** | 2.0 · Gjeldende fra 01.09.2026 · Revideres årlig |
-| **Hjemmel** | Personvernforordningen (GDPR); personopplysningsloven; Datatilsynets veiledere |
-| **Leser videre** | [Risikoregister](../02-risikovurdering/risikoregister.md) · [Hendelsesresponsplan](../04-isms/hendelsesresponsplan.md) · [SoA](../04-isms/statement-of-applicability.md) |
+| Dokumenteier | Personvernkontakt |
+| Godkjent av | Daglig leder |
+| Versjon | 2.0, gjeldende fra 1. september 2026 |
+| Revisjon | Årlig |
+| Hjemmel | Personvernforordningen, personopplysningsloven, veiledere fra Datatilsynet |
 
----
+## 1. Er Mjøsdata behandlingsansvarlig eller databehandler?
 
-## 1. Rolleanalyse: behandlingsansvarlig eller databehandler?
+Dette er det viktigste personvernspørsmålet for en driftsleverandør, og også det som oftest blir hoppet over. Rollen følger av hvem som faktisk bestemmer formålet med og midlene for behandlingen, ikke av hva partene har kalt seg i avtalen. Mjøsdata opptrer i begge roller samtidig.
 
-Det viktigste — og oftest oversette — personvernspørsmålet for en MSP er *rollen*. Rollen følger av hvem som faktisk bestemmer formål og midler for behandlingen, ikke av hva partene har kalt seg i avtalen. Mjøsdata opptrer i begge roller samtidig:
-
-| Behandling | Mjøsdatas rolle | Konsekvens |
+| Behandling | Rolle | Hva det innebærer |
 |---|---|---|
-| Egne kunderegistre, kontrakter, fakturering (Salesforce) | **Behandlingsansvarlig** | Fullt ansvar for behandlingsgrunnlag, informasjonsplikt, sletting og de registrertes rettigheter |
-| Egne ansattdata (HR, lønn, tilgangslogger) | **Behandlingsansvarlig** | Som over; særlige krav ved kontrolltiltak i arbeidsforhold |
-| Sikkerhetslogging og hendelseshåndtering i egne systemer | **Behandlingsansvarlig** | Grunnlag i berettiget interesse; krever interesseavveining |
-| Drift av kunders systemer og data i Azure | **Databehandler** | Krever databehandleravtale (art. 28) med *hver* kunde; skal kun behandle etter dokumentert instruks |
-| Bruk av Microsoft (Azure/365), Salesforce, Atlassian | Mjøsdata er kunde; leverandørene er **databehandlere/underdatabehandlere** | Databehandleravtaler nedover, og vurdering av tredjelandsoverføring (art. 44 flg.) |
+| Egne kunderegistre, kontrakter og fakturering i Salesforce | Behandlingsansvarlig | Fullt ansvar for behandlingsgrunnlag, informasjonsplikt, sletting og de registrertes rettigheter |
+| Egne ansattdata i HR, lønn og tilgangslogger | Behandlingsansvarlig | Som over, med særlige krav der det dreier seg om kontrolltiltak i arbeidsforhold |
+| Sikkerhetslogging og hendelseshåndtering i egne systemer | Behandlingsansvarlig | Grunnlaget er berettiget interesse, og det krever en dokumentert interesseavveining |
+| Drift av kundenes systemer og data i Azure | Databehandler | Krever databehandleravtale med hver enkelt kunde, og behandling kun etter dokumentert instruks |
+| Bruk av Microsoft, Salesforce og Atlassian | Mjøsdata er kunde, leverandørene er databehandlere | Databehandleravtaler nedover i kjeden, og vurdering av overføring til tredjeland |
 
 ### Hvorfor dobbeltrollen er den vanskelige delen
 
-Mjøsdata må holde orden på **to avtalekjeder samtidig**: nedover mot egne leverandører og oppover mot egne kunder. Det praktisk viktigste utslaget gjelder brudd:
+Mjøsdata må holde orden på to avtalekjeder samtidig, nedover mot egne leverandører og oppover mot egne kunder. Det praktisk viktigste utslaget gjelder brudd.
 
-> Ved et brudd som rammer kundedata er Mjøsdata **databehandler**. Da har Mjøsdata ingen 72-timersfrist mot Datatilsynet — plikten er å varsle **kunden** (den behandlingsansvarlige) *uten ugrunnet opphold*, slik at kunden rekker sin egen frist. I praksis betyr det at Mjøsdatas interne frist må være vesentlig kortere enn 72 timer; [hendelsesresponsplanen](../04-isms/hendelsesresponsplan.md#5-varslingsmatrise) setter den til 24 timer.
+Ved et brudd som rammer kundedata er Mjøsdata databehandler. Da har selskapet ingen 72-timersfrist mot Datatilsynet. Plikten er å varsle kunden, som er behandlingsansvarlig, uten ugrunnet opphold, slik at kunden rekker sin egen frist. I praksis betyr det at Mjøsdatas interne frist må være vesentlig kortere enn 72 timer. Hendelsesresponsplanen setter den til 24 timer.
 
-Denne distinksjonen er den vanligste feilen i MSP-bransjen: leverandøren venter på egen 72-timersfrist som ikke finnes, og kunden mister sin.
-
----
+Denne forskjellen er den vanligste feilen i bransjen. Leverandøren venter på en 72-timersfrist som ikke gjelder for dem, og kunden mister sin.
 
 ## 2. Sentrale forpliktelser og status
 
-| Artikkel | Krav | Relevans for Mjøsdata | Tiltak | Status |
+| Artikkel | Krav | Hva det betyr for Mjøsdata | Tiltak | Status |
 |---|---|---|---|---|
-| **Art. 5** | Prinsipper: formålsbegrensning, dataminimering, lagringsbegrensning, integritet og konfidensialitet | Kundedata i Salesforce og persondata i supportlogger må minimeres og slettes etter definerte frister | Slette- og minimeringspolicy; automatisk sletting av supportlogger etter 12 mnd der annet ikke kreves | 🟠 Gap |
-| **Art. 6 / 9** | Behandlingsgrunnlag; særlige kategorier | Egne behandlinger hjemles i avtale (6(1)(b)), rettslig forpliktelse (6(1)(c)) og berettiget interesse (6(1)(f)). Helseklinikkers pasientdata (art. 9) behandles **kun som databehandler etter instruks** — Mjøsdata trenger ikke eget art. 9-grunnlag for disse | Grunnlagsvurdering per behandling i behandlingsprotokollen | 🟡 Delvis |
-| **Art. 25** | Innebygd og standardinnstilt personvern | Nye kundeoppsett i Azure skal ha kryptering, minimert tilgang og logging som standard, ikke som tilvalg | Baseline-konfigurasjon ([T7](../02-risikovurdering/tiltaksplan.md#t7--baseline-konfigurasjon-og-teknisk-revisjon-av-azure)) | 🟡 Delvis |
-| **Art. 28** | Databehandleravtaler | Kreves mot alle kunder Mjøsdata drifter for, og mot Microsoft, Salesforce og Atlassian. Krav om forhåndsgodkjenning av underdatabehandlere | Avtalerevisjon; standard DBA-mal; leverandørregister ([T10](../02-risikovurdering/tiltaksplan.md#t10--leverandør--og-verktøykjedestyring)) | 🟠 Gap |
-| **Art. 30** | Behandlingsprotokoll | Plikt både som behandlingsansvarlig (30(1)) og databehandler (30(2)). Unntaket for virksomheter under 250 ansatte gjelder **ikke** her, siden behandlingen ikke er leilighetsvis og omfatter art. 9-data | Se utdrag i [pkt. 3](#3-behandlingsprotokoll--utdrag-art-30) | 🟠 Gap |
-| **Art. 32** | Sikkerhet ved behandling | Kryptering, tilgangsstyring, gjenopprettingsevne og regelmessig testing — sammenfaller i stor grad med tiltaksplanen | [T1](../02-risikovurdering/tiltaksplan.md#t1--obligatorisk-phishing-resistent-mfa-og-betinget-tilgang), [T3](../02-risikovurdering/tiltaksplan.md#t3--geo-redundans-immutable-backup-og-ddos-beskyttelse), [T5](../02-risikovurdering/tiltaksplan.md#t5--sikring-av-api-integrasjoner), [T6](../02-risikovurdering/tiltaksplan.md#t6--rollebasert-tilgangsstyring-og-periodisk-tilgangsrevisjon), [T7](../02-risikovurdering/tiltaksplan.md#t7--baseline-konfigurasjon-og-teknisk-revisjon-av-azure), [T9](../02-risikovurdering/tiltaksplan.md#t9--full-diskkryptering-og-endepunktkontroll) | 🟡 Delvis |
-| **Art. 33–34** | Meldeplikt (72 t) og varsling av registrerte | Som databehandler: varsle kunden uten ugrunnet opphold. Som behandlingsansvarlig: melde Datatilsynet innen 72 timer | [Hendelsesresponsplan](../04-isms/hendelsesresponsplan.md) med bruddvurderingsskjema ([T8](../02-risikovurdering/tiltaksplan.md#t8--hendelsesrespons--og-bruddrutiner)) | 🟠 Gap |
-| **Art. 35** | DPIA ved høy risiko | Skydrift av helseklinikkdata utløser DPIA-plikt hos kunden; Mjøsdata skal bistå etter art. 28(3)(f) | DPIA-screening i [pkt. 4](#4-dpia-screening-skydrift-av-helseklinikkdata) | 🟡 Delvis |
-| **Art. 37** | Personvernombud | **Reell tvil — se [pkt. 5](#5-personvernombud-art-37--en-reell-tvil)** | Anbefaling: frivillig utpeking | 🟠 Gap |
-| **Art. 44 flg.** | Overføring til tredjeland | Amerikanske skyleverandører; se [pkt. 6](#6-overføring-til-tredjeland) | EU/EØS-regioner i Azure; dokumentert overføringsvurdering | 🟡 Delvis |
+| 5 | Prinsippene, blant annet formålsbegrensning, dataminimering og lagringsbegrensning | Kundedata i Salesforce og persondata i supportlogger må minimeres og slettes etter faste frister | Slettepolicy, og automatisk sletting av supportlogger etter tolv måneder der annet ikke kreves | Gap |
+| 6 og 9 | Behandlingsgrunnlag og særlige kategorier | Egne behandlinger hjemles i avtale, rettslig forpliktelse og berettiget interesse. Pasientdata behandles bare som databehandler etter instruks, så Mjøsdata trenger ikke eget grunnlag etter artikkel 9 for disse | Grunnlagsvurdering per behandling i protokollen | Delvis |
+| 25 | Innebygd og standardinnstilt personvern | Nye kundeoppsett i Azure skal ha kryptering, minimert tilgang og logging som standard, ikke som noe man huker av for | Baseline-konfigurasjon, tiltak T7 | Delvis |
+| 28 | Databehandleravtaler | Kreves mot alle kunder Mjøsdata drifter for, og mot Microsoft, Salesforce og Atlassian. Underdatabehandlere skal godkjennes på forhånd | Avtalerevisjon, standardmal, leverandørregister i T10 | Gap |
+| 30 | Behandlingsprotokoll | Plikt både som behandlingsansvarlig og databehandler. Unntaket for virksomheter under 250 ansatte gjelder ikke her, siden behandlingen ikke er leilighetsvis og omfatter data etter artikkel 9 | Se utdraget i punkt 3 | Gap |
+| 32 | Sikkerhet ved behandling | Kryptering, tilgangsstyring, evne til gjenoppretting og regelmessig testing. Overlapper i stor grad med tiltaksplanen | T1, T3, T5, T6, T7 og T9 | Delvis |
+| 33 og 34 | Meldeplikt og varsling av de registrerte | Som databehandler: varsle kunden uten ugrunnet opphold. Som behandlingsansvarlig: melde Datatilsynet innen 72 timer | Hendelsesresponsplanen med bruddvurderingsskjema, tiltak T8 | Gap |
+| 35 | Personvernkonsekvensvurdering ved høy risiko | Skydrift av helseklinikkdata utløser DPIA-plikt hos kunden. Mjøsdata skal bistå | Screening i punkt 4 | Delvis |
+| 37 | Personvernombud | Her er det reell tvil, se punkt 5 | Anbefaling om frivillig utpeking | Gap |
+| 44 og utover | Overføring til tredjeland | Amerikanske skyleverandører, se punkt 6 | EU-regioner i Azure og dokumentert overføringsvurdering | Delvis |
 
----
+## 3. Behandlingsprotokoll, utdrag
 
-## 3. Behandlingsprotokoll — utdrag (art. 30)
+### Som behandlingsansvarlig
 
-### 3.1 Som behandlingsansvarlig (art. 30(1))
-
-| Behandling | Formål | Kategorier registrerte / opplysninger | Grunnlag | Lagringstid | Mottakere |
+| Behandling | Formål | Registrerte og opplysninger | Grunnlag | Lagringstid | Mottakere |
 |---|---|---|---|---|---|
-| Kundeadministrasjon (Salesforce) | Avtaleoppfølging og support | Kontaktpersoner hos kunder: navn, e-post, telefon, sakshistorikk | Art. 6(1)(b) — avtale | Avtaletid + 3 år | Salesforce (databehandler) |
-| Fakturering og regnskap | Oppfyllelse av bokføringsplikt | Kontaktpersoner; fakturadata | Art. 6(1)(c) — bokføringsloven | 5 år etter regnskapsårets slutt | Regnskapsfører (databehandler) |
-| Personaladministrasjon | Arbeidsforholdets gjennomføring | Ansatte: personalia, stilling, lønn, fravær | Art. 6(1)(b) og 6(1)(c) — arbeidsmiljøloven, folketrygdloven | Arbeidsforhold + 5 år | Lønnsleverandør, NAV |
-| Sikkerhetslogging og hendelseshåndtering | Ivareta informasjonssikkerhet, oppdage og håndtere hendelser | Ansatte og eksterne brukere: bruker-ID, IP, tidsstempel, handling | Art. 6(1)(f) — berettiget interesse; interesseavveining dokumentert | 12 mnd, lengre kun ved pågående hendelsessak | Ingen (intern); ev. politi ved anmeldelse |
+| Kundeadministrasjon i Salesforce | Avtaleoppfølging og support | Kontaktpersoner hos kunder, med navn, e-post, telefon og sakshistorikk | Artikkel 6 nr. 1 bokstav b, avtale | Avtaletid pluss tre år | Salesforce som databehandler |
+| Fakturering og regnskap | Oppfylle bokføringsplikten | Kontaktpersoner og fakturadata | Artikkel 6 nr. 1 bokstav c, bokføringsloven | Fem år etter regnskapsårets slutt | Regnskapsfører som databehandler |
+| Personaladministrasjon | Gjennomføring av arbeidsforholdet | Ansatte, med personalia, stilling, lønn og fravær | Artikkel 6 nr. 1 bokstav b og c, arbeidsmiljøloven og folketrygdloven | Arbeidsforhold pluss fem år | Lønnsleverandør og NAV |
+| Sikkerhetslogging og hendelseshåndtering | Ivareta informasjonssikkerhet, oppdage og håndtere hendelser | Ansatte og eksterne brukere, med bruker-ID, IP-adresse, tidsstempel og handling | Artikkel 6 nr. 1 bokstav f, berettiget interesse | Tolv måneder, lenger bare ved pågående sak | Ingen eksterne, eventuelt politiet ved anmeldelse |
 
-> **Om berettiget interesse (6(1)(f)):** sikkerhetslogging er uttrykkelig anerkjent som en berettiget interesse i GDPR fortalepunkt 49. Interesseavveiningen er likevel dokumentert særskilt, fordi logging av ansattes aktivitet også er et kontrolltiltak i arbeidsmiljølovens forstand og krever drøfting med de tillitsvalgte.
+Om den siste raden: sikkerhetslogging er uttrykkelig anerkjent som en berettiget interesse i fortalen til forordningen. Interesseavveiningen er likevel dokumentert særskilt, siden logging av ansattes aktivitet også er et kontrolltiltak etter arbeidsmiljøloven og skal drøftes med de tillitsvalgte.
 
-### 3.2 Som databehandler (art. 30(2))
+### Som databehandler
 
-| Kunde(-kategori) | Behandling utført på vegne av kunden | Kategorier opplysninger | Underdatabehandlere | Overføring tredjeland |
+| Kundekategori | Behandling utført på kundens vegne | Kategorier opplysninger | Underdatabehandlere | Overføring til tredjeland |
 |---|---|---|---|---|
-| Helseklinikker | Drift, backup og support av journal- og kontorsystemer | Pasientdata, herunder helseopplysninger (art. 9) — kun etter dokumentert instruks | Microsoft (Azure, EU/EØS-region) | Nei ved normal drift; se [pkt. 6](#6-overføring-til-tredjeland) om support |
-| Kommuner | Drift av administrative systemer | Ansatt- og innbyggerdata | Microsoft (Azure, EU/EØS-region) | Nei ved normal drift |
-| Advokat- og regnskapskontorer | Drift og backup av saks- og klientsystemer | Klientdata underlagt taushetsplikt | Microsoft (Azure, EU/EØS-region) | Nei ved normal drift |
+| Helseklinikker | Drift, backup og support av journal- og kontorsystemer | Pasientdata, herunder helseopplysninger, bare etter dokumentert instruks | Microsoft, i Azure-region i EU eller EØS | Ikke ved normal drift, se punkt 6 om support |
+| Kommuner | Drift av administrative systemer | Ansatt- og innbyggerdata | Microsoft, i Azure-region i EU eller EØS | Ikke ved normal drift |
+| Advokat- og regnskapskontorer | Drift og backup av saks- og klientsystemer | Klientdata underlagt taushetsplikt | Microsoft, i Azure-region i EU eller EØS | Ikke ved normal drift |
 
-Protokollen skal etter art. 30(2) også inneholde kontaktopplysninger for hver behandlingsansvarlig og en generell beskrivelse av sikkerhetstiltakene etter art. 32. Disse feltene føres i den fullstendige protokollen; utdraget her viser strukturen.
+Protokollen skal etter artikkel 30 nr. 2 også inneholde kontaktopplysninger for hver behandlingsansvarlig og en generell beskrivelse av sikkerhetstiltakene. Disse feltene ligger i den fullstendige protokollen. Utdraget her viser strukturen.
 
----
+## 4. DPIA-screening for skydrift av helseklinikkdata
 
-## 4. DPIA-screening: skydrift av helseklinikkdata
+Vurdert mot artikkel 35 nr. 3 og Datatilsynets liste over behandlinger som alltid krever konsekvensvurdering.
 
-Vurdert mot art. 35(3) og Datatilsynets liste over behandlinger som alltid krever personvernkonsekvensvurdering:
+| Kriterium | Vurdering | Utslagsgivende |
+|---|---|---|
+| Særlige kategorier i stor skala | Ja, pasientdata for flere klinikker samlet på én plattform | Ja |
+| Systematisk overvåking av offentlig tilgjengelig område | Nei | |
+| Ny teknologi | Nei, etablert skyplattform | |
+| Sårbare registrerte | Ja, pasienter står i et avhengighetsforhold og kan ikke velge bort behandlingen | Ja |
+| Sammenstilling av datasett | Nei, kundemiljøene holdes adskilt | |
+| Automatiserte avgjørelser med rettsvirkning | Nei | |
 
-| Screeningkriterium | Vurdering | Utslagsgivende? |
-|---|---|:---:|
-| Særlige kategorier i stor skala? | **Ja** — pasientdata for flere klinikker samlet på én plattform | ✅ |
-| Systematisk overvåking av offentlig tilgjengelig område? | Nei | — |
-| Ny teknologi? | Nei — etablert skyplattform | — |
-| Sårbare registrerte? | **Ja** — pasienter står i et avhengighetsforhold og kan ikke velge bort behandlingen | ✅ |
-| Sammenstilling av datasett? | Nei — kundemiljøene holdes adskilt | — |
-| Automatiserte avgjørelser med rettsvirkning? | Nei | — |
+To utslagsgivende kriterier er oppfylt. DPIA-plikten utløses hos den behandlingsansvarlige, altså klinikken, og ikke hos Mjøsdata. Mjøsdata skal som databehandler bistå etter artikkel 28 nr. 3 bokstav f.
 
-**Konklusjon:** to utslagsgivende kriterier er oppfylt, og DPIA-plikten utløses hos **den behandlingsansvarlige** — altså klinikken, ikke Mjøsdata. Mjøsdata skal som databehandler bistå, jf. art. 28(3)(f).
+I praksis er dette løst ved at Mjøsdata har laget et standardisert underlagsdokument som beskriver sikkerhetstiltak, hvor dataene ligger, tilgangsstyring, underdatabehandlere og slettefrister. Dokumentet gjenbrukes på tvers av helsekundene. Det sparer tid, og det er samtidig et salgsargument. En klinikk som skal gjennomføre en DPIA får halve jobben gjort av leverandøren.
 
-**Praktisk håndtering:** Mjøsdata har utarbeidet et standardisert underlagsdokument som beskriver sikkerhetstiltak, datalokasjon, tilgangsstyring, underdatabehandlere og slettefrister. Dokumentet gjenbrukes på tvers av helsekundene. Det er både en effektivisering og et salgsargument: en klinikk som skal gjennomføre DPIA får halve jobben gjort av leverandøren.
+## 5. Personvernombud
 
----
+Den enkle konklusjonen ville vært at Mjøsdata ikke har plikt til å utpeke personvernombud. Virksomheten er privat, den utøver ikke offentlig myndighet, og kjernevirksomheten er IT-drift og ikke behandling av helseopplysninger. Jeg mener den konklusjonen er for rask.
 
-## 5. Personvernombud (art. 37) — en reell tvil
+Argumentet for at plikten gjelder ligger i artikkel 37 nr. 1 bokstav c. Bestemmelsen gjelder uttrykkelig både behandlingsansvarlige og databehandlere der kjernevirksomheten består i behandling av særlige kategorier i stor skala. Veiledningen fra Artikkel 29-gruppen understreker at kjernevirksomhet omfatter behandling som er en uatskillelig del av tjenesten, ikke bare virksomhetens formål. En driftsleverandør som drifter journalsystemer for flere klinikker behandler helseopplysninger som en nødvendig og løpende del av selve tjenesten, ikke som en støttefunksjon. Skalaen er heller ikke ubetydelig når flere klinikkers pasientdata samles hos én leverandør.
 
-Den enkle konklusjonen ville vært at Mjøsdata ikke har plikt til å utpeke personvernombud: virksomheten er privat, den utøver ikke myndighet, og kjernevirksomheten er IT-drift — ikke behandling av helseopplysninger. **Den konklusjonen er for rask.**
+Argumentet mot er at Mjøsdata behandler dataene bare etter instruks, uten tilgang til innholdet i normal drift, og uten egen interesse i opplysningene. Det er teknisk drift, ikke bruk.
 
-**Argumentet for plikt (art. 37(1)(c)):** bestemmelsen gjelder uttrykkelig både behandlingsansvarlige *og databehandlere* der kjernevirksomheten består i behandling av særlige kategorier i stor skala. Artikkel 29-gruppens veiledning (WP243) understreker at «kjernevirksomhet» omfatter behandling som er en uatskillelig del av tjenesten — ikke bare virksomhetens formål. En MSP som drifter journalsystemer for flere klinikker behandler helseopplysninger som en *nødvendig og løpende del av selve tjenesten*, ikke som en støttefunksjon. Skalaen er heller ikke ubetydelig når flere klinikkers pasientdata samles hos én leverandør.
+Spørsmålet er ikke avklart, og en feilvurdering kan sanksjoneres i seg selv. Jeg anbefaler derfor at Mjøsdata utpeker personvernombud frivillig og registrerer det hos Datatilsynet. Begrunnelsen er tredelt. Det fjerner en rettslig usikkerhet til en kostnad som er lav for en virksomhet som uansett trenger personvernkompetanse. Et frivillig utpekt ombud må oppfylle de samme kravene til uavhengighet, så det finnes ingen forenklet variant, men det gir en definert rolle som ellers ville flytt mellom sikkerhetsansvarlig og daglig leder. Og helse- og kommunekunder spør om det i anskaffelser.
 
-**Argumentet mot plikt:** Mjøsdata behandler dataene kun etter instruks, uten tilgang til innholdet i normal drift, og har ingen egen interesse i opplysningene. Behandlingen er teknisk drift, ikke bruk.
-
-**Vurdering og anbefaling:** spørsmålet er ikke avklart, og en feilvurdering er selvstendig sanksjonerbar. Mjøsdata anbefales derfor å **utpeke personvernombud frivillig** og registrere det hos Datatilsynet. Begrunnelsen er tredelt:
-
-1. Det fjerner en rettslig usikkerhet til en kostnad som er lav for en virksomhet som uansett trenger personvernkompetanse.
-2. Frivillig utpekt ombud må oppfylle de samme kravene til uavhengighet — det er altså ingen «light-versjon» — men det gir en definert rolle som ellers ville flytt mellom sikkerhetsansvarlig og daglig leder.
-3. Helse- og kommunekunder spør om det i anskaffelser.
-
-Vurderingen dokumenteres skriftlig uansett utfall, slik art. 24 forutsetter — det er selve dokumentasjonen av vurderingen som beskytter virksomheten dersom Datatilsynet er uenig i konklusjonen.
-
----
+Uansett konklusjon skal vurderingen dokumenteres skriftlig, slik ansvarlighetsprinsippet i artikkel 24 forutsetter. Det er selve dokumentasjonen som beskytter virksomheten dersom Datatilsynet skulle være uenig.
 
 ## 6. Overføring til tredjeland
 
-Mjøsdatas skyleverandører er amerikanske. Overføringsgrunnlaget er derfor et selvstendig spørsmål, uavhengig av hvor dataene lagres.
+Skyleverandørene til Mjøsdata er amerikanske. Overføringsgrunnlaget er derfor et eget spørsmål, uavhengig av hvor dataene fysisk lagres.
 
-| Forhold | Vurdering |
-|---|---|
-| **Lagringssted** | Alle kundemiljøer konfigureres i Azure-regioner innenfor EU/EØS. Dette er et sikkerhetstiltak og et minimeringstiltak, men det er *ikke i seg selv* et overføringsgrunnlag |
-| **Overføringsgrunnlag** | EU-kommisjonens tilstrekkelighetsbeslutning for **EU–US Data Privacy Framework** (10. juli 2023) dekker overføring til amerikanske virksomheter som er sertifisert under ordningen. Beslutningen ble opprettholdt av EU-domstolens underrett i *Latombe v. Kommisjonen* (2025), men avgjørelsen kan ankes videre |
-| **Fallback** | Standard personvernbestemmelser (SCC) med tilhørende **overføringsvurdering (TIA)** holdes oppdatert som reserveløsning. Historikken fra Safe Harbour og Privacy Shield tilsier at et rammeverk som er rettslig utfordret bør ha et alternativ klart, ikke etableres i etterkant |
-| **Supportsituasjonen** | Selv med EU-lagring kan support fra leverandørens personell utenfor EØS utgjøre en overføring. Dette må sjekkes mot den enkelte leverandørs vilkår og eventuelt begrenses avtalemessig |
-| **Kontroll av sertifisering** | Leverandørenes DPF-sertifisering verifiseres årlig mot den offisielle DPF-listen som del av [leverandørstyringen (T10)](../02-risikovurdering/tiltaksplan.md#t10--leverandør--og-verktøykjedestyring) |
+Alle kundemiljøer settes opp i Azure-regioner innenfor EU eller EØS. Det er både et sikkerhetstiltak og et minimeringstiltak, men det er ikke i seg selv et overføringsgrunnlag.
 
----
+Grunnlaget er EU-kommisjonens tilstrekkelighetsbeslutning for Data Privacy Framework mellom EU og USA fra juli 2023, som dekker overføring til amerikanske virksomheter som er sertifisert under ordningen. Beslutningen ble opprettholdt av underretten i EU-domstolen i Latombe-saken i 2025, men avgjørelsen kan ankes videre.
 
-## 7. Prioriterte etterlevelsestiltak
+Standard personvernbestemmelser med tilhørende overføringsvurdering holdes oppdatert som reserveløsning. Historikken fra Safe Harbour og Privacy Shield tilsier at et rammeverk som er rettslig utfordret bør ha et alternativ klart på forhånd, ikke etableres i etterkant.
 
-| # | Tiltak | Hvorfor i denne rekkefølgen | Knyttet til |
-|:---:|---|---|---|
-| 1 | Etablere komplett behandlingsprotokoll (art. 30) | Grunnmuren alt annet bygger på — man kan ikke sikre, slette eller melde det man ikke vet at man har | — |
-| 2 | Innføre bruddhåndteringsrutine med varslingsfrister og maler (art. 33–34) | Høyest risiko for sanksjon på kort sikt; billigste tiltak i porteføljen | [T8](../02-risikovurdering/tiltaksplan.md#t8--hendelsesrespons--og-bruddrutiner) |
-| 3 | Revidere og inngå databehandleravtaler i begge retninger (art. 28) | Kontraktuell eksponering mot både kunder og leverandører | [T10](../02-risikovurdering/tiltaksplan.md#t10--leverandør--og-verktøykjedestyring) |
-| 4 | Utpeke personvernombud og dokumentere art. 37-vurderingen | Fjerner rettslig usikkerhet; forutsetning for troverdighet i helsesegmentet | — |
-| 5 | Dokumentere overføringsvurdering og verifisere DPF-sertifiseringer (art. 44 flg.) | Krever leverandørdialog og tar tid | [T10](../02-risikovurdering/tiltaksplan.md#t10--leverandør--og-verktøykjedestyring) |
-| 6 | Slette- og minimeringsregler i Salesforce og Jira (art. 5) | Teknisk arbeid som forutsetter at protokollen er ferdig | — |
+Det er også verdt å være oppmerksom på supportsituasjonen. Selv med lagring i EU kan support fra leverandørens personell utenfor EØS utgjøre en overføring. Dette må sjekkes mot vilkårene til den enkelte leverandøren og eventuelt begrenses i avtale. Sertifiseringene til leverandørene verifiseres årlig mot den offisielle listen, som en del av leverandørstyringen i T10.
 
----
+## 7. Prioriterte tiltak
+
+| Rekkefølge | Tiltak | Hvorfor akkurat her |
+|---|---|---|
+| 1 | Etablere komplett behandlingsprotokoll etter artikkel 30 | Grunnmuren alt annet bygger på. Man kan ikke sikre, slette eller melde det man ikke vet at man har |
+| 2 | Innføre bruddhåndtering med frister og maler etter artikkel 33 og 34 | Størst risiko for sanksjon på kort sikt, og det billigste tiltaket i porteføljen |
+| 3 | Revidere og inngå databehandleravtaler i begge retninger | Kontraktuell eksponering både mot kunder og leverandører |
+| 4 | Utpeke personvernombud og dokumentere vurderingen etter artikkel 37 | Fjerner rettslig usikkerhet, og er en forutsetning for troverdighet i helsesegmentet |
+| 5 | Dokumentere overføringsvurdering og verifisere sertifiseringer | Krever dialog med leverandørene og tar tid |
+| 6 | Innføre slette- og minimeringsregler i Salesforce og Jira | Teknisk arbeid som forutsetter at protokollen er ferdig |
 
 ## 8. Kilder
 
-- Personvernforordningen (EU) 2016/679 (GDPR)
-- Lov om behandling av personopplysninger (personopplysningsloven)
-- Artikkel 29-gruppen: *Guidelines on Data Protection Officers* (WP243 rev.01)
-- Datatilsynet: veiledere om databehandleravtaler, personvernkonsekvensvurdering og avviksmelding
-- EU-kommisjonens gjennomføringsbeslutning (EU) 2023/1795 — EU–US Data Privacy Framework
+* Personvernforordningen, forordning (EU) 2016/679
+* Lov om behandling av personopplysninger
+* Artikkel 29-gruppen, Guidelines on Data Protection Officers, WP243
+* Datatilsynets veiledere om databehandleravtaler, konsekvensvurdering og avviksmelding
+* Kommisjonens gjennomføringsbeslutning om Data Privacy Framework mellom EU og USA

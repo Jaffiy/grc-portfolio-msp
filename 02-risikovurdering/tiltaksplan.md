@@ -1,270 +1,219 @@
-# 02.3 — Risikobehandlingsplan
+# Risikobehandlingsplan
 
 | | |
 |---|---|
-| **Dokument** | Risikobehandlingsplan (risk treatment plan) |
-| **Dokumenteier** | Sikkerhetsansvarlig |
-| **Godkjent av** | Daglig leder |
-| **Versjon** | 2.0 · Gjeldende fra 01.09.2026 · Følges opp kvartalsvis |
-| **Hjemmel** | ISO/IEC 27001:2022 pkt. 6.1.3; ISO/IEC 27005:2022 |
-| **Leser videre** | [Risikoregister](risikoregister.md) · [Statement of Applicability](../04-isms/statement-of-applicability.md) · [Sporbarhetsmatrise](../sporbarhetsmatrise.md) |
+| Dokumenteier | Sikkerhetsansvarlig |
+| Godkjent av | Daglig leder |
+| Versjon | 2.0, gjeldende fra 1. september 2026 |
+| Oppfølging | Kvartalsvis |
+| Hjemmel | ISO/IEC 27001:2022 punkt 6.1.3, ISO/IEC 27005:2022 |
 
-> **Omfang.** Planen dekker alle risikoer over akseptnivå (nivå ≥ 10: R1, R2, R3, R4, R6, R8, R10) **samt** tre moderate risikoer der tiltakskostnaden er så lav at det ikke er forsvarlig å utsette dem (R5, R7, R9). Akseptkriteriene i [metodikk pkt. 4](metodikk.md#4-risikoakseptkriterier) åpner uttrykkelig for dette.
->
-> **Om restrisiko.** Restrisiko er oppgitt som et nytt **S×K-par** med begrunnelse for hvilken av de to faktorene tiltaket faktisk endrer. Et tiltak som bare oppgis som «12 → 4» skjuler om det virker forebyggende eller skadebegrensende, og lar seg ikke etterprøve.
+Planen dekker alle risikoer over akseptnivå, altså nivå 10 og oppover: R1, R2, R3, R4, R6, R8 og R10. I tillegg tar den med tre moderate risikoer der tiltaket koster så lite at det ikke er forsvarlig å utsette det: R5, R7 og R9. Akseptkriteriene i metodikken åpner uttrykkelig for dette.
 
----
+Restrisiko er oppgitt med både ny sannsynlighet og ny konsekvens, sammen med en begrunnelse for hvilken av de to tiltaket faktisk endrer. Et tiltak som bare oppgis som en endring fra 12 til 4 skjuler om det virker forebyggende eller skadebegrensende, og lar seg ikke etterprøve.
 
 ## Oversikt
 
-| # | Tiltak | Adresserer | Kostnad | Frist | Prioritet |
-|:---:|---|---|---|:---:|:---:|
-| [T1](#t1--obligatorisk-phishing-resistent-mfa-og-betinget-tilgang) | Phishing-resistent MFA og betinget tilgang | R1, R2, R8 | Lav | 1 mnd | 1 |
-| [T8](#t8--hendelsesrespons--og-bruddrutiner) | Hendelsesrespons- og bruddrutiner | R9 + alle | Lav | 2 mnd | 2 |
-| [T9](#t9--full-diskkryptering-og-endepunktkontroll) | Full diskkryptering og endepunktkontroll | R7 | Lav | 2 mnd | 3 |
-| [T2](#t2--kontinuerlig-sikkerhetsopplæring-med-phishing-simulering) | Sikkerhetsopplæring og phishing-simulering | R2, R5, R9 | Lav–moderat | 2 mnd (oppstart) | 4 |
-| [T5](#t5--sikring-av-api-integrasjoner) | Sikring av API-integrasjoner | R3 | Moderat | 3 mnd | 5 |
-| [T7](#t7--baseline-konfigurasjon-og-teknisk-revisjon-av-azure) | Baseline-konfigurasjon og teknisk revisjon | R10, R6 | Moderat | 3 mnd | 6 |
-| [T3](#t3--geo-redundans-immutable-backup-og-ddos-beskyttelse) | Geo-redundans, immutable backup, DDoS-vern | R4, R6 | Høy | 3 mnd | 7 |
-| [T6](#t6--rollebasert-tilgangsstyring-og-periodisk-tilgangsrevisjon) | Rollebasert tilgangsstyring og tilgangsrevisjon | R5, R1 | Moderat | 4 mnd | 8 |
-| [T10](#t10--leverandør--og-verktøykjedestyring) | Leverandør- og verktøykjedestyring | R8 | Lav–moderat | 6 mnd | 9 |
-| [T4](#t4--segmentering-og-herding-av-msp-verktøykjeden) | Segmentering og herding av MSP-verktøykjeden | R6, R8, R2 | Høy | 6 mnd | 10* |
+| Tiltak | Kort beskrivelse | Adresserer | Kostnad | Frist | Prioritet |
+|---|---|---|---|---|---|
+| T1 | Phishing-resistent MFA og betinget tilgang | R1, R2, R8 | Lav | 1 måned | 1 |
+| T8 | Hendelsesrespons og bruddrutiner | R9, og alle indirekte | Lav | 2 måneder | 2 |
+| T9 | Full diskkryptering og endepunktkontroll | R7 | Lav | 2 måneder | 3 |
+| T2 | Sikkerhetsopplæring og phishing-simulering | R2, R5, R9 | Lav til moderat | 2 måneder til oppstart | 4 |
+| T5 | Sikring av API-integrasjonen | R3 | Moderat | 3 måneder | 5 |
+| T7 | Baseline-konfigurasjon og teknisk revisjon | R10, R6 | Moderat | 3 måneder | 6 |
+| T3 | Geo-redundans, uforanderlig backup og vern mot tjenestenektangrep | R4, R6 | Høy | 3 måneder | 7 |
+| T6 | Rollebasert tilgangsstyring og tilgangsrevisjon | R5, R1 | Moderat | 4 måneder | 8 |
+| T10 | Leverandør- og verktøykjedestyring | R8 | Lav til moderat | 6 måneder | 9 |
+| T4 | Segmentering og herding av verktøykjeden | R6, R8, R2 | Høy | 6 måneder | 10 |
 
-\* T4 rangeres sist på risikoreduksjon per krone, men startes **parallelt fra dag én**. Se [kost/nytte](#kostnytte-og-prioritering).
+T4 kommer sist på listen fordi rangeringen følger risikoreduksjon per krone. Det betyr ikke at arbeidet skal vente. Se avsnittet om prioritering nederst.
 
-```mermaid
-gantt
-    title Gjennomføringsplan — 6 måneder
-    dateFormat YYYY-MM-DD
-    axisFormat %b
-    section Identitet
-    T1 MFA og betinget tilgang        :t1, 2026-09-01, 30d
-    T6 RBAC og tilgangsrevisjon       :t6, 2026-10-01, 90d
-    section Beredskap
-    T8 Hendelsesrespons               :t8, 2026-09-01, 60d
-    T9 Diskkryptering                 :t9, 2026-09-01, 60d
-    T3 Redundans og backup            :t3, 2026-10-01, 60d
-    section Teknisk
-    T5 API-sikring                    :t5, 2026-10-01, 60d
-    T7 Baseline og revisjon           :t7, 2026-10-01, 60d
-    section Struktur
-    T2 Opplæringsprogram              :t2, 2026-10-01, 120d
-    T10 Leverandørstyring             :t10, 2026-11-01, 120d
-    T4 Segmentering og PAW            :t4, 2026-09-01, 180d
-```
+## T1. Phishing-resistent MFA og betinget tilgang
 
----
+Adresserer R1, R2 og delvis R8.
 
-## Tiltak
+MFA håndheves for alle brukere i Salesforce, Jira, Azure og e-post gjennom betinget tilgang i Entra ID. Administratorer og supportpersonell skal bruke phishing-resistente metoder som FIDO2 eller passkeys. Autentiseringsprotokoller som ikke støtter MFA blokkeres.
 
-### T1 — Obligatorisk phishing-resistent MFA og betinget tilgang
+Kontoovertakelse er inngangen i begge de to høyest rangerte risikoene. Sterk autentisering fjerner ikke angrepsforsøket, men bryter angrepskjeden på det punktet der det er billigst å bryte den. Lisensene ligger i all hovedsak allerede i Microsoft 365-avtalen, så dette gir mest risikoreduksjon per krone av alt i planen.
 
-**Adresserer:** R1, R2, delvis R8
+Kontroller: ISO 27001 A.5.17 og A.8.5. NSM Grunnprinsipper 2.6.
+Eier: driftsansvarlig. Frist: 1 måned.
 
-- **Tiltak:** Håndheve MFA for alle brukere i Salesforce, Jira, Azure og e-post via Entra ID Conditional Access. Prioritere phishing-resistente metoder (FIDO2/passkeys) for administratorer og supportteam. Blokkere legacy-autentisering som ikke støtter MFA.
-- **Begrunnelse:** Kontoovertakelse er inngangsvektoren i begge de to høyest rangerte risikoene. Sterk autentisering fjerner ikke angrepsforsøket, men bryter angrepskjeden på det punktet der den er billigst å bryte. Lisensene finnes i all hovedsak allerede i Microsoft 365-avtalen — dette er planens høyeste risikoreduksjon per krone.
-- **Kontroller:** ISO 27001 `A.5.17` (autentiseringsinformasjon), `A.8.5` (sikker autentisering) · NSM GP **2.6** (ha kontroll på identiteter og tilganger)
-- **Eier:** Driftsansvarlig · **Frist:** 1 måned
+Restrisiko for R1 går fra 16 til 4. Sannsynligheten faller fra 4 til 1, mens konsekvensen står uendret på 4, siden dataene er like eksponerte dersom angrepet først lykkes. Restrisiko for R2 går fra 20 til 10. Sannsynligheten faller fra 4 til 2, og risikoen trenger både T2 og T4 for å komme ned på akseptabelt nivå.
 
-| Risiko | Før | Etter | Endring |
-|---|---|---|---|
-| R1 | S4 × K4 = **16** 🔴 | S1 × K4 = **4** 🟢 | Sannsynlighet 4 → 1. Konsekvensen er uendret: lykkes angrepet, er dataene like eksponerte |
-| R2 | S4 × K5 = **20** 🔴 | S2 × K5 = **10** 🟠 | Sannsynlighet 4 → 2. Krever [T2](#t2--kontinuerlig-sikkerhetsopplæring-med-phishing-simulering) og [T4](#t4--segmentering-og-herding-av-msp-verktøykjeden) for å nå akseptabelt nivå |
+## T2. Sikkerhetsopplæring og phishing-simulering
 
----
+Adresserer R2, R5 og R9.
 
-### T2 — Kontinuerlig sikkerhetsopplæring med phishing-simulering
+Programmet er beskrevet i [kapittel 05](../05-sikkerhetskultur/opplaeringsprogram.md). Kort oppsummert består det av kvartalsvise kurs, månedlige phishing-simuleringer med support som prioritert gruppe, og en kampanje som belønner rapportering. Målet er klikkrate under 5 prosent og rapporteringsrate over 60 prosent innen tolv måneder.
 
-**Adresserer:** R2, R5, R9
+MFA stopper kontoovertakelse, men ikke sosial manipulering som får en ansatt til å utføre handlingen selv. Support er den mest eksponerte gruppen fordi de kombinerer stort e-postvolum, tidspress og bred systemtilgang i samme rolle.
 
-- **Tiltak:** Programmet beskrevet i [kap. 05](../05-sikkerhetskultur/opplaeringsprogram.md): kvartalsvise interaktive kurs, månedlige phishing-simuleringer med support som prioritert målgruppe, og en atferdskampanje som belønner rapportering. Målsatt klikkrate < 5 % og rapporteringsrate > 60 % innen 12 måneder.
-- **Begrunnelse:** MFA ([T1](#t1--obligatorisk-phishing-resistent-mfa-og-betinget-tilgang)) stopper kontoovertakelse, men ikke sosial manipulering som får en ansatt til å utføre handlingen selv. Support er den eksponerte gruppen: høyt e-postvolum, tidspress og bred systemtilgang i samme rolle.
-- **Kontroller:** ISO 27001 `A.6.3` (bevisstgjøring, utdanning og opplæring) · NSM GP **2.8** (beskytt e-post og nettleser) for de tekniske delene
-- **Merknad om rammeverk:** NSMs *Grunnprinsipper for IKT-sikkerhet* har ingen egen prinsippkategori for opplæring og sikkerhetskultur — det dekkes av NSMs *Grunnprinsipper for sikkerhetsstyring* («Gjennomfør jevnlige øvelser, trening og opplæring»). Referansen er derfor delt mellom to NSM-rammeverk framfor å tvinges inn i ett.
-- **Eier:** Sikkerhetsansvarlig · **Frist:** oppstart innen 2 måneder, full syklus løpende
+Kontroller: ISO 27001 A.6.3. På den tekniske siden NSM Grunnprinsipper 2.8 om beskyttelse av e-post og nettleser.
 
-| Risiko | Før | Etter (med T1 og T4) | Endring |
-|---|---|---|---|
-| R2 | S2 × K5 = **10** 🟠 | S2 × K4 = **8** 🟡 | Konsekvens 5 → 4. Opplæring reduserer ikke antall phishing-forsøk, men rask rapportering forkorter tiden angriperen er uoppdaget, og segmentering begrenser rekkevidden |
+Her er det verdt å nevne en detalj om rammeverkene. NSMs Grunnprinsipper for IKT-sikkerhet har ingen egen kategori for opplæring og sikkerhetskultur. Det dekkes i stedet av NSMs Grunnprinsipper for sikkerhetsstyring, under prinsippet om jevnlige øvelser, trening og opplæring. Jeg har derfor delt referansen mellom to NSM-rammeverk i stedet for å presse den inn i ett.
 
----
+Eier: sikkerhetsansvarlig. Frist: oppstart innen 2 måneder, deretter løpende.
 
-### T3 — Geo-redundans, immutable backup og DDoS-beskyttelse
+Restrisiko for R2 går fra 10 til 8, forutsatt at T1 og T4 også er på plass. Konsekvensen faller fra 5 til 4. Opplæring reduserer ikke antall phishing-forsøk, men rask rapportering forkorter tiden angriperen er uoppdaget, og segmentering begrenser hvor langt vedkommende kommer.
 
-**Adresserer:** R4, delvis R6
+## T3. Geo-redundans, uforanderlig backup og vern mot tjenestenektangrep
 
-- **Tiltak:** Geo-redundant lagring og failover for kritiske kundemiljøer; automatisert backup til separat Azure-region med immutability (WORM), slik at løsepengevirus ikke kan kryptere eller slette sikkerhetskopiene; lastbalansering og Azure DDoS Protection. Gjenopprettingstest minimum halvårlig — en backup som aldri er testet er en antakelse, ikke et tiltak.
-- **Begrunnelse:** SLA-forpliktelsene gjør nedetid til en direkte økonomisk kostnad. Immutability er dessuten det ene tiltaket som skiller en løsepengevirushendelse med gjenoppretting fra en uten.
-- **Kontroller:** ISO 27001 `A.8.13` (sikkerhetskopiering), `A.8.14` (redundans), `A.5.29` (informasjonssikkerhet ved avbrudd), `A.5.30` (IKT-beredskap for driftskontinuitet) · NSM GP **2.9** (etabler evne til gjenoppretting av data)
-- **Eier:** Driftsansvarlig · **Frist:** 3 måneder
+Adresserer R4 og delvis R6.
 
-| Risiko | Før | Etter | Endring |
-|---|---|---|---|
-| R4 | S3 × K5 = **15** 🔴 | S1 × K5 = **5** 🟡 | Sannsynlighet 3 → 1 for *langvarig* utilgjengelighet. Konsekvensen av et fullstendig regionsutfall er uendret — derfor beholdes moderat restrisiko |
+Kritiske kundemiljøer får geo-redundant lagring og mulighet for failover. Backup automatiseres til en egen region med uforanderlig lagring, slik at løsepengevirus ikke kan kryptere eller slette sikkerhetskopiene. I tillegg kommer lastbalansering og Azure DDoS Protection. Gjenoppretting testes minst hvert halvår, siden en backup som aldri er testet er en antakelse og ikke et tiltak.
 
----
+SLA-forpliktelsene gjør nedetid til en direkte kostnad. Uforanderlig backup er dessuten det ene tiltaket som skiller en løsepengevirushendelse man kommer seg ut av fra en man ikke kommer seg ut av.
 
-### T4 — Segmentering og herding av MSP-verktøykjeden
+Kontroller: ISO 27001 A.8.13, A.8.14, A.5.29 og A.5.30. NSM Grunnprinsipper 2.9.
+Eier: driftsansvarlig. Frist: 3 måneder.
 
-**Adresserer:** R6, R8, bidrar til R2
+Restrisiko for R4 går fra 15 til 5. Sannsynligheten for langvarig utilgjengelighet faller fra 3 til 1, mens konsekvensen av et fullstendig regionsutfall står uendret. Derfor blir restrisikoen liggende på moderat.
 
-- **Tiltak:** Nettverkssegmentering mellom kundemiljøer og mellom kunde- og administrasjonsnett; dedikerte, herdede administrasjonsarbeidsstasjoner (PAW) for alt privilegert arbeid; just-in-time-tilgang via Entra Privileged Identity Management; sikkerhetsvurdering og oppdateringsregime for fjernstyringsverktøy (RMM).
-- **Begrunnelse:** Dette er tiltaket som adresserer den strukturelle MSP-risikoen: ett innbrudd skal ikke kunne bli alle kunders innbrudd. Det er også en forutsetning for at inndemmingssteget i [hendelsesresponsplanen](../04-isms/hendelsesresponsplan.md#43-inndemming-utrydding-gjenoppretting) i det hele tatt er mulig å utføre per kunde.
-- **Kontroller:** ISO 27001 `A.8.22` (segregering av nettverk), `A.8.2` (privilegerte tilgangsrettigheter), `A.8.19` (installasjon av programvare på driftssystemer) · NSM GP **2.2** (sikker IKT-arkitektur), **2.4** (beskytt virksomhetens nettverk), **2.5** (kontroller dataflyt)
-- **Eier:** Driftsansvarlig · **Frist:** 6 måneder
+## T4. Segmentering og herding av verktøykjeden
 
-| Risiko | Før | Etter | Endring |
-|---|---|---|---|
-| R6 | S3 × K5 = **15** 🔴 | S2 × K4 = **8** 🟡 | Begge faktorer reduseres: herding senker sannsynligheten, segmentering begrenser spredning og dermed konsekvensen |
-| R8 | S2 × K5 = **10** 🟠 | S1 × K5 = **5** 🟡 | Sannsynlighet 2 → 1 med [T10](#t10--leverandør--og-verktøykjedestyring). Konsekvensen er uendret: et kompromittert RMM-verktøy er per definisjon privilegert overalt |
+Adresserer R6 og R8, og bidrar til R2.
 
----
+Nettverket segmenteres mellom kundemiljøene, og mellom kundenett og administrasjonsnett. Alt privilegert arbeid flyttes til dedikerte, herdede administrasjonsarbeidsstasjoner. Tilganger aktiveres just-in-time gjennom Entra Privileged Identity Management. Fjernstyringsverktøyene får en sikkerhetsvurdering og et fast oppdateringsregime.
 
-### T5 — Sikring av API-integrasjoner
+Dette er tiltaket som treffer selve kjerneproblemet ved å være driftsleverandør: ett innbrudd skal ikke kunne bli alle kunders innbrudd. Segmenteringen er også en forutsetning for at inndemmingssteget i hendelsesresponsplanen i det hele tatt kan gjøres per kunde i stedet for å ta ned alt.
 
-**Adresserer:** R3
+Kontroller: ISO 27001 A.8.22, A.8.2 og A.8.19. NSM Grunnprinsipper 2.2, 2.4 og 2.5.
+Eier: driftsansvarlig. Frist: 6 måneder.
 
-- **Tiltak:** mTLS og OAuth 2.0 med kortlivede tokens på integrasjonen Salesforce ↔ Jira; hemmelighetshåndtering i Azure Key Vault med automatisk rotasjon; full logging av integrasjonstrafikk til sentralisert logglagring.
-- **Begrunnelse:** Integrasjonen er det eneste punktet der persondata forlater ett system og går inn i et annet uten menneskelig mellomledd. Den er dermed både høyverdig for en angriper og lett å overse i drift, siden den fungerer uten at noen ser på den.
-- **Kontroller:** ISO 27001 `A.8.21` (sikkerhet i nettverkstjenester), `A.8.24` (bruk av kryptografi), `A.8.16` (overvåkingsaktiviteter) · NSM GP **2.5** (kontroller dataflyt), **2.7** (beskytt data i ro og i transitt)
-- **Eier:** Utviklingsansvarlig · **Frist:** 3 måneder
+Restrisiko for R6 går fra 15 til 8. Her faller begge faktorene: herding senker sannsynligheten, og segmentering begrenser spredningen og dermed konsekvensen. Restrisiko for R8 går fra 10 til 5, forutsatt at T10 også gjennomføres. Sannsynligheten faller fra 2 til 1, mens konsekvensen ikke kan reduseres videre, siden et kompromittert fjernstyringsverktøy per definisjon har privilegier overalt.
 
-| Risiko | Før | Etter | Endring |
-|---|---|---|---|
-| R3 | S3 × K4 = **12** 🟠 | S1 × K4 = **4** 🟢 | Sannsynlighet 3 → 1. Gjensidig autentisering og sertifikatvalidering fjerner angrepsformen; konsekvensen ved et vellykket angrep er uendret |
+## T5. Sikring av API-integrasjonen
 
----
+Adresserer R3.
 
-### T6 — Rollebasert tilgangsstyring og periodisk tilgangsrevisjon
+Integrasjonen mellom Salesforce og Jira får gjensidig TLS-autentisering og OAuth 2.0 med kortlivede tokens. Hemmeligheter flyttes til Azure Key Vault med automatisk rotasjon, og all integrasjonstrafikk logges til sentral lagring.
 
-**Adresserer:** R5, bidrar til R1
+Integrasjonen er det eneste punktet der persondata går fra ett system til et annet uten at et menneske er involvert. Det gjør den både verdifull for en angriper og lett å glemme i drift, siden den fungerer uten at noen ser på den.
 
-- **Tiltak:** RBAC etter minste privilegium i Salesforce og Azure; rollemaler per stilling; kvartalsvis tilgangsrevisjon der ledere bekrefter egne ansattes tilganger og leveranseansvarlige bekrefter kundetilganger; automatisk deaktivering ved fratredelse. Operasjonalisert i [tilgangsstyringspolicyen](../04-isms/policy-tilgangsstyring.md).
-- **Begrunnelse:** Innsiderisiko håndteres ikke med mistillit til ansatte, men med at ingen har mer tilgang enn oppgavene krever. Bieffekten er like viktig: en kompromittert konto kan bare gjøre det kontoen faktisk har rett til.
-- **Kontroller:** ISO 27001 `A.5.15` (tilgangsstyring), `A.5.16` (identitetshåndtering), `A.5.18` (tilgangsrettigheter), `A.8.2` (privilegerte tilgangsrettigheter) · NSM GP **2.6**
-- **Eier:** Sikkerhetsansvarlig · **Frist:** 4 måneder
+Kontroller: ISO 27001 A.8.21, A.8.24 og A.8.16. NSM Grunnprinsipper 2.5 og 2.7.
+Eier: utviklingsansvarlig. Frist: 3 måneder.
 
-| Risiko | Før | Etter | Endring |
-|---|---|---|---|
-| R5 | S2 × K4 = **8** 🟡 | S1 × K4 = **4** 🟢 | Sannsynlighet 2 → 1. Konsekvensen ved misbruk av en legitim tilgang er uendret — derfor er tilgangsrevisjon, ikke kryptering, det virkemidlet som hjelper |
+Restrisiko for R3 går fra 12 til 4. Sannsynligheten faller fra 3 til 1, siden gjensidig autentisering og sertifikatvalidering fjerner angrepsformen. Konsekvensen ved et vellykket angrep er den samme som før.
 
----
+## T6. Rollebasert tilgangsstyring og tilgangsrevisjon
 
-### T7 — Baseline-konfigurasjon og teknisk revisjon av Azure
+Adresserer R5, og bidrar til R1.
 
-**Adresserer:** R10, bidrar til R6
+Tilganger i Salesforce og Azure settes opp etter minste privilegium, med rollemaler per stilling. Hvert kvartal bekrefter ledere tilgangene til sine egne ansatte, og leveranseansvarlige bekrefter kundetilgangene. Tilganger deaktiveres automatisk ved fratredelse. Detaljene står i [policyen for tilgangsstyring](../04-isms/policy-tilgangsstyring.md).
 
-- **Tiltak:** Definert sikker baseline (CIS Benchmark for Microsoft Azure) som utgangspunkt for alle nye kundemiljøer; kontinuerlig avviksovervåking med Microsoft Defender for Cloud; månedlig gjennomgang av avvik; ekstern penetrasjonstest to ganger årlig.
-- **Begrunnelse:** R10 er en menneskelig feil, ikke et angrep. Feilkonfigurasjoner forhindres ikke av opplæring alene, men av at riktig konfigurasjon er standardvalget og at avvik oppdages automatisk.
-- **Kontroller:** ISO 27001 `A.8.9` (konfigurasjonsstyring), `A.8.8` (håndtering av tekniske sårbarheter), `A.8.16` (overvåkingsaktiviteter), `A.5.23` (sikkerhet ved bruk av skytjenester) · NSM GP **2.3** (ivareta en sikker konfigurasjon), **3.1**, **3.2**, **3.4** (oppdag sårbarheter, sikkerhetsovervåking, inntrengningstester)
-- **Eier:** Driftsansvarlig · **Frist:** 3 måneder
+Innsiderisiko håndteres ikke med mistillit til ansatte, men med at ingen har mer tilgang enn oppgavene krever. Bieffekten er minst like viktig: en kompromittert konto kan bare gjøre det kontoen faktisk har rett til.
 
-| Risiko | Før | Etter | Endring |
-|---|---|---|---|
-| R10 | S3 × K4 = **12** 🟠 | S2 × K3 = **6** 🟡 | Begge faktorer: baseline reduserer sannsynligheten for feil, automatisk deteksjon forkorter eksponeringsvinduet og dermed omfanget |
+Kontroller: ISO 27001 A.5.15, A.5.16, A.5.18 og A.8.2. NSM Grunnprinsipper 2.6.
+Eier: sikkerhetsansvarlig. Frist: 4 måneder.
 
----
+Restrisiko for R5 går fra 8 til 4. Sannsynligheten faller fra 2 til 1, mens konsekvensen av at noen misbruker en legitim tilgang står uendret. Det er nettopp derfor tilgangsrevisjon hjelper her, og ikke kryptering.
 
-### T8 — Hendelsesrespons- og bruddrutiner
+## T7. Baseline-konfigurasjon og teknisk revisjon av Azure
 
-**Adresserer:** R9 direkte; konsekvensreduserende for samtlige risikoer
+Adresserer R10, og bidrar til R6.
 
-- **Tiltak:** [Hendelsesresponsplan](../04-isms/hendelsesresponsplan.md) med definerte alvorlighetsgrader, eskaleringsvei, 72-timersvurdering etter GDPR art. 33, varslingsmaler for kunder og Datatilsynet, samt årlig tabletop-øvelse med ledelsen.
-- **Begrunnelse:** Dette er planens billigste tiltak og det eneste som virker på *alle* de andre risikoene samtidig — ikke ved å hindre hendelser, men ved å begrense hva de koster. Det lukker også R9, som er et rent prosessavvik uten trusselaktør.
-- **Kontroller:** ISO 27001 `A.5.24`–`A.5.28` (planlegging, vurdering, respons, læring, bevissikring), `A.5.31` (juridiske og regulatoriske krav) · GDPR art. 33–34 · NSM GP **4.1**–**4.4** (forbered, vurder og klassifiser, kontroller og håndter, evaluer og lær)
-- **Eier:** Sikkerhetsansvarlig · **Frist:** 2 måneder
+Det defineres en sikker baseline basert på CIS Benchmark for Azure, som blir utgangspunktet for alle nye kundemiljøer. Avvik overvåkes løpende med Microsoft Defender for Cloud og gjennomgås månedlig. I tillegg gjennomføres ekstern penetrasjonstest to ganger i året.
 
-| Risiko | Før | Etter | Endring |
-|---|---|---|---|
-| R9 | S3 × K3 = **9** 🟡 | S1 × K3 = **3** 🟢 | Sannsynlighet 3 → 1. Konsekvensen av et faktisk fristbrudd er uendret; tiltaket gjør det usannsynlig at fristen brytes |
+R10 er en menneskelig feil, ikke et angrep. Feilkonfigurasjoner forsvinner ikke av opplæring alene. De forsvinner når riktig konfigurasjon er standardvalget og avvik fanges opp automatisk.
 
----
+Kontroller: ISO 27001 A.8.9, A.8.8, A.8.16 og A.5.23. NSM Grunnprinsipper 2.3, 3.1, 3.2 og 3.4.
+Eier: driftsansvarlig. Frist: 3 måneder.
 
-### T9 — Full diskkryptering og endepunktkontroll
+Restrisiko for R10 går fra 12 til 6. Både sannsynlighet og konsekvens faller, fra 3 til 2 og fra 4 til 3. Baselinen gjør feil mindre sannsynlige, og automatisk deteksjon korter ned tiden feilen står åpen.
 
-**Adresserer:** R7
+## T8. Hendelsesrespons og bruddrutiner
 
-- **Tiltak:** Håndhevet BitLocker-kryptering på alle bærbare enheter via Intune-samsvarspolicy; enheter uten kryptering nektes tilgang til Mjøsdatas ressurser gjennom betinget tilgang; fjernsletting aktivert; automatisk skjermlås etter 5 minutter.
-- **Begrunnelse:** R7 ligger under behandlingsterskelen (nivå 6), men tiltaket koster i praksis bare konfigurasjonstid — funksjonaliteten finnes allerede i lisensene. Å la en kjent, gratis lukkbar sårbarhet stå åpen fordi den formelt er «akseptabel» er dårlig risikostyring, ikke god. Tiltaket er dessuten forutsetningen for at et tapt utstyr *ikke* er et meldepliktig personvernbrudd — se [alvorlighetsgradene i hendelsesresponsplanen](../04-isms/hendelsesresponsplan.md#2-definisjoner-og-alvorlighetsgrader).
-- **Kontroller:** ISO 27001 `A.8.1` (brukerendepunktutstyr), `A.7.9` (sikkerhet for utstyr utenfor lokaler), `A.8.24` (bruk av kryptografi) · NSM GP **2.7** (beskytt data i ro og i transitt)
-- **Eier:** Driftsansvarlig · **Frist:** 2 måneder
+Adresserer R9 direkte, og reduserer konsekvensen for alle de andre risikoene.
 
-| Risiko | Før | Etter | Endring |
-|---|---|---|---|
-| R7 | S2 × K3 = **6** 🟡 | S2 × K1 = **2** 🟢 | Konsekvens 3 → 1. Sannsynligheten for at en enhet mistes er uendret — kryptering gjør bare at tapet ikke lenger er et databrudd |
+[Hendelsesresponsplanen](../04-isms/hendelsesresponsplan.md) definerer alvorlighetsgrader, eskaleringsvei, vurdering etter GDPR artikkel 33 innen 72 timer, varslingsmaler for kunder og Datatilsynet, og en årlig øvelse med ledelsen.
 
----
+Dette er det billigste tiltaket i planen, og det eneste som virker på alle de andre risikoene samtidig. Det hindrer ikke hendelser, men det begrenser hva de koster. I tillegg lukker det R9, som er et rent prosessavvik uten angriper involvert.
 
-### T10 — Leverandør- og verktøykjedestyring
+Kontroller: ISO 27001 A.5.24 til A.5.28, og A.5.31. GDPR artikkel 33 og 34. NSM Grunnprinsipper 4.1 til 4.4.
+Eier: sikkerhetsansvarlig. Frist: 2 måneder.
 
-**Adresserer:** R8
+Restrisiko for R9 går fra 9 til 3. Sannsynligheten faller fra 3 til 1. Konsekvensen av et faktisk fristbrudd er den samme, men tiltaket gjør det usannsynlig at fristen brytes.
 
-- **Tiltak:** Etablere et leverandørregister med kriticitetsklassifisering; sikkerhetskrav som standard i alle nye leverandøravtaler; årlig risikovurdering av kritiske leverandører med særskilt vekt på fjernstyringsverktøy (RMM) og andre verktøy med stående privilegert tilgang; definert prosess for oppfølging av leverandørens egne sikkerhetsvarsler og endringer.
-- **Begrunnelse:** R8 er den eneste risikoen i registeret der Mjøsdata ikke selv kontrollerer sårbarheten. Segmentering ([T4](#t4--segmentering-og-herding-av-msp-verktøykjeden)) begrenser skaden, men bare leverandørstyring reduserer sannsynligheten. Tiltaket lukker samtidig det største gapet mot NIS2s krav om leverandørkjedesikkerhet — se [kap. 06](../06-nis2/nis2-vurdering.md#4-kravene-i-art-21--gap-analyse-mot-porteføljen).
-- **Kontroller:** ISO 27001 `A.5.19` (leverandørforhold), `A.5.20` (sikkerhet i leverandøravtaler), `A.5.21` (sikkerhet i IKT-leverandørkjeden), `A.5.22` (overvåking og endringshåndtering av leverandørtjenester), `A.5.23` (sikkerhet ved bruk av skytjenester) · GDPR art. 28 · NSM GP **2.1** (ivareta sikkerhet i anskaffelses- og utviklingsprosesser)
-- **Eier:** Sikkerhetsansvarlig · **Frist:** 6 måneder
+## T9. Full diskkryptering og endepunktkontroll
 
-| Risiko | Før | Etter (med T4) | Endring |
-|---|---|---|---|
-| R8 | S2 × K5 = **10** 🟠 | S1 × K5 = **5** 🟡 | Sannsynlighet 2 → 1 gjennom leverandørvurdering og oppdateringsregime. Konsekvensen kan ikke reduseres videre uten å fjerne verktøyklassen helt |
+Adresserer R7.
 
----
+BitLocker håndheves på alle bærbare enheter gjennom samsvarspolicy i Intune. Enheter uten kryptering nektes tilgang til Mjøsdatas ressurser gjennom betinget tilgang. Fjernsletting aktiveres, og skjermen låses automatisk etter fem minutter.
 
-## Restrisiko og formell aksept
+R7 ligger under behandlingsterskelen, men tiltaket koster i praksis bare konfigurasjonstid siden funksjonaliteten allerede er lisensiert. Å la en kjent sårbarhet som kan lukkes gratis stå åpen fordi den formelt er akseptabel er dårlig risikostyring. Tiltaket er dessuten forutsetningen for at et tapt utstyr ikke skal være et meldepliktig personvernbrudd, noe som er nærmere forklart under alvorlighetsgradene i hendelsesresponsplanen.
+
+Kontroller: ISO 27001 A.8.1, A.7.9 og A.8.24. NSM Grunnprinsipper 2.7.
+Eier: driftsansvarlig. Frist: 2 måneder.
+
+Restrisiko for R7 går fra 6 til 2. Konsekvensen faller fra 3 til 1. Sannsynligheten for at en enhet blir mistet er den samme som før, men kryptering gjør at tapet ikke lenger er et databrudd.
+
+## T10. Leverandør- og verktøykjedestyring
+
+Adresserer R8.
+
+Det opprettes et leverandørregister der leverandørene klassifiseres etter hvor kritiske de er. Sikkerhetskrav blir standard i alle nye avtaler. Kritiske leverandører risikovurderes årlig, med særlig vekt på fjernstyringsverktøy og andre verktøy som har stående privilegert tilgang. Det defineres også en prosess for å følge opp sikkerhetsvarsler og endringer fra leverandørene.
+
+R8 er den eneste risikoen i registeret der Mjøsdata ikke selv kontrollerer sårbarheten. Segmentering begrenser skaden, men bare leverandørstyring reduserer sannsynligheten. Tiltaket lukker samtidig det største gapet mot NIS2s krav om leverandørkjedesikkerhet.
+
+Kontroller: ISO 27001 A.5.19 til A.5.23. GDPR artikkel 28. NSM Grunnprinsipper 2.1.
+Eier: sikkerhetsansvarlig. Frist: 6 måneder.
+
+Restrisiko for R8 går fra 10 til 5, sammen med T4. Sannsynligheten faller fra 2 til 1 gjennom leverandørvurdering og oppdateringsregime. Konsekvensen kan ikke reduseres videre uten å fjerne hele verktøyklassen.
+
+## Restrisiko og aksept
 
 | Risiko | Før | Etter | Klassifisering | Beslutning |
-|:---:|:---:|:---:|---|---|
-| R1 | 16 🔴 | **4** 🟢 | Lav | Aksepteres administrativt |
-| R2 | 20 🔴 | **8** 🟡 | Moderat | **Krever formell aksept** |
-| R3 | 12 🟠 | **4** 🟢 | Lav | Aksepteres administrativt |
-| R4 | 15 🔴 | **5** 🟡 | Moderat | **Krever formell aksept** |
-| R5 | 8 🟡 | **4** 🟢 | Lav | Aksepteres administrativt |
-| R6 | 15 🔴 | **8** 🟡 | Moderat | **Krever formell aksept** |
-| R7 | 6 🟡 | **2** 🟢 | Lav | Aksepteres administrativt |
-| R8 | 10 🟠 | **5** 🟡 | Moderat | **Krever formell aksept** |
-| R9 | 9 🟡 | **3** 🟢 | Lav | Aksepteres administrativt |
-| R10 | 12 🟠 | **6** 🟡 | Moderat | **Krever formell aksept** |
+|---|---|---|---|---|
+| R1 | 16 | 4 | Lav | Aksepteres administrativt |
+| R2 | 20 | 8 | Moderat | Krever formell aksept |
+| R3 | 12 | 4 | Lav | Aksepteres administrativt |
+| R4 | 15 | 5 | Moderat | Krever formell aksept |
+| R5 | 8 | 4 | Lav | Aksepteres administrativt |
+| R6 | 15 | 8 | Moderat | Krever formell aksept |
+| R7 | 6 | 2 | Lav | Aksepteres administrativt |
+| R8 | 10 | 5 | Moderat | Krever formell aksept |
+| R9 | 9 | 3 | Lav | Aksepteres administrativt |
+| R10 | 12 | 6 | Moderat | Krever formell aksept |
 
-Alle restrisikoer ligger på **moderat eller lavere**, slik [metodikk pkt. 4](metodikk.md#4-risikoakseptkriterier) krever. De fem moderate restrisikoene — **R2, R4, R6, R8 og R10** — legges fram for daglig leder for dokumentert aksept etter innstilling fra sikkerhetsansvarlig.
+Alle restrisikoene ligger på moderat eller lavere, slik metodikken krever. De fem som ligger på moderat, altså R2, R4, R6, R8 og R10, legges fram for daglig leder for dokumentert aksept etter innstilling fra sikkerhetsansvarlig.
 
-### Risikomatrise etter tiltak
+Matrisen etter tiltak ser slik ut:
 
-|  | **K1** | **K2** | **K3** | **K4** | **K5** |
-|---|:---:|:---:|:---:|:---:|:---:|
-| **S5** | | | | | |
-| **S4** | | | | | |
-| **S3** | | | | | |
-| **S2** | 🟢 R7 | | 🟡 R10 | 🟡 R2, R6 | |
-| **S1** | | | 🟢 R9 | 🟢 R1, R3, R5 | 🟡 R4, R8 |
+| | K1 | K2 | K3 | K4 | K5 |
+|---|---|---|---|---|---|
+| S5 | | | | | |
+| S4 | | | | | |
+| S3 | | | | | |
+| S2 | R7 | | R10 | R2, R6 | |
+| S1 | | | R9 | R1, R3, R5 | R4, R8 |
 
-Alle risikoer har flyttet seg nedover og til venstre. De som gjenstår på konsekvens 4–5 er de der konsekvensen er strukturelt gitt av MSP-modellen og ikke lar seg fjerne med tiltak — bare med en annen forretningsmodell.
+Alle risikoene har flyttet seg nedover og til venstre. De som fortsatt ligger på konsekvens 4 og 5 er de der konsekvensen følger av forretningsmodellen og ikke lar seg fjerne med tiltak, bare med en annen måte å drive på.
 
----
+## Prioritering og kostnad
 
-## Kost/nytte og prioritering
+| Prioritet | Tiltak | Kostnad | Risikoreduksjon | Hvorfor den ligger her |
+|---|---|---|---|---|
+| 1 | T1 MFA | Lav, lisenser finnes | Svært høy | Fjerner 16 og 10 risikopoeng på én måned |
+| 2 | T8 Hendelsesrespons | Lav, i hovedsak arbeidstid | Høy, konsekvensreduserende | Virker på alle risikoene samtidig |
+| 3 | T9 Diskkryptering | Lav, konfigurasjonstid | Moderat | Ren opprydding, ingen grunn til å vente |
+| 4 | T2 Opplæring | Lav til moderat | Høy | Nødvendig for at T1 skal få full effekt |
+| 5 | T5 API-sikring | Moderat | Høy | Avgrenset teknisk arbeid med tydelig effekt |
+| 6 | T7 Baseline og revisjon | Moderat | Moderat | Hindrer at samme type feil gjentar seg |
+| 7 | T3 Redundans og backup | Høy | Høy | Direkte knyttet til SLA-økonomien, men en reell driftskostnad |
+| 8 | T6 Rollestyring | Moderat | Moderat | Krever organisatorisk arbeid, ikke bare teknikk |
+| 9 | T10 Leverandørstyring | Lav til moderat | Moderat til høy | Prosessarbeid, og en forutsetning for NIS2-beredskap |
+| 10 | T4 Segmentering | Høy | Høy, og strukturell | Dyrest per risikopoeng, men viktigst på sikt |
 
-| Prioritet | Tiltak | Kostnadsindikasjon | Risikoreduksjon | Begrunnelse for plassering |
-|:---:|---|---|---|---|
-| 1 | T1 MFA | Lav — lisenser finnes | Svært høy | Fjerner 16 og 10 risikopoeng på én måned |
-| 2 | T8 Hendelsesrespons | Lav — arbeidstid | Høy (konsekvensreduserende) | Virker på alle risikoer samtidig |
-| 3 | T9 Diskkryptering | Lav — konfigurasjonstid | Moderat | Ren opprydding; ingen grunn til å vente |
-| 4 | T2 Opplæring | Lav–moderat | Høy | Nødvendig for at T1 skal ha full effekt |
-| 5 | T5 API-sikring | Moderat | Høy | Avgrenset teknisk arbeid, tydelig effekt |
-| 6 | T7 Baseline/revisjon | Moderat | Moderat | Forebygger gjentakelse av menneskelige feil |
-| 7 | T3 Redundans/backup | Høy | Høy | Direkte SLA-økonomi, men reell driftskostnad |
-| 8 | T6 RBAC | Moderat | Moderat | Krever organisatorisk arbeid, ikke bare teknikk |
-| 9 | T10 Leverandørstyring | Lav–moderat | Moderat–høy | Prosessarbeid; forutsetning for NIS2-beredskap |
-| 10* | T4 Segmentering/PAW | Høy | Høy (strukturell) | Dyrest per risikopoeng, men strategisk viktigst |
-
-\* **Om T4.** Rangeringen er risikoreduksjon per krone, og på det målet kommer T4 sist. Det er likevel det eneste tiltaket som endrer Mjøsdatas *strukturelle* risikoprofil som MSP, og full effekt tar seks måneder. Det startes derfor parallelt fra dag én. En prioriteringsliste som bare følger kroner per risikopoeng vil systematisk utsette den typen tiltak til de blir akutte.
-
----
+Om T4 er det verdt å si litt mer. Rangeringen over måler risikoreduksjon per krone, og på det målet kommer T4 sist. Men det er samtidig det eneste tiltaket som endrer den strukturelle risikoprofilen til en driftsleverandør, og full effekt tar seks måneder. Derfor startes arbeidet parallelt fra dag én. En prioriteringsliste som bare følger kroner per risikopoeng vil systematisk skyve slike tiltak foran seg til de blir akutte.
 
 ## Styring og oppfølging
 
-- Det etableres en **sikkerhets- og personvernkomité** ledet av sikkerhetsansvarlig, med driftsansvarlig og personvernkontakt som faste medlemmer. Komiteen rapporterer kvartalsvis til daglig leder og årlig til styret.
-- **Kvartalsvis:** status per tiltak, avvik fra frist, nye risikoer fra hendelser, KPI-er fra [opplæringsprogrammet](../05-sikkerhetskultur/opplaeringsprogram.md#5-måling-og-mål).
-- **Årlig:** full revisjon av risikoregisteret, oppdatering av [SoA](../04-isms/statement-of-applicability.md), ledelsens gjennomgang, og fornyet aksept av restrisiko.
-- **Ad hoc:** planen revideres ved vesentlige endringer i systemlandskap, kundeportefølje eller trusselbilde, og etter enhver hendelse klassifisert som S1 eller S2.
+Det opprettes en sikkerhets- og personvernkomité ledet av sikkerhetsansvarlig, med driftsansvarlig og personvernkontakt som faste medlemmer. Komiteen rapporterer kvartalsvis til daglig leder og årlig til styret.
 
-> **Merknad om ledelsesansvar:** NIS2 vil, dersom Mjøsdata omfattes, gjøre ledelsen personlig ansvarlig for å godkjenne og følge opp risikostyringen. Styringsmodellen over er utformet for å tåle det kravet allerede nå — se [kap. 06](../06-nis2/nis2-vurdering.md).
+Hvert kvartal går komiteen gjennom status per tiltak, avvik fra frist, nye risikoer som har kommet ut av hendelser, og måltallene fra opplæringsprogrammet. Årlig gjøres full revisjon av risikoregisteret, oppdatering av Statement of Applicability, ledelsens gjennomgang og ny aksept av restrisiko.
+
+Planen revideres ellers ved vesentlige endringer i systemlandskapet, kundeporteføljen eller trusselbildet, og etter enhver hendelse klassifisert som kritisk eller alvorlig.
+
+Dersom NIS2 blir gjennomført og Mjøsdata omfattes, vil ledelsen få et personlig ansvar for å godkjenne og følge opp risikostyringen. Styringsmodellen over er laget for å tåle det kravet allerede nå.

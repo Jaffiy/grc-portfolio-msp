@@ -1,74 +1,74 @@
-# 04.2 — Policy for tilgangsstyring
+# Policy for tilgangsstyring
 
 | | |
 |---|---|
-| **Dokumenteier** | Sikkerhetsansvarlig |
-| **Godkjent av** | Daglig leder |
-| **Versjon** | 2.0 · Gjeldende fra 01.09.2026 · Revideres årlig |
-| **Hjemmel** | ISO/IEC 27001:2022 `A.5.15`, `A.5.16`, `A.5.17`, `A.5.18`, `A.8.2`, `A.8.5` · GDPR art. 32 · NSM GP 2.6 |
-| **Adresserer** | [R1](../02-risikovurdering/risikoregister.md), [R5](../02-risikovurdering/risikoregister.md), [R8](../02-risikovurdering/risikoregister.md) via [T1](../02-risikovurdering/tiltaksplan.md#t1--obligatorisk-phishing-resistent-mfa-og-betinget-tilgang), [T4](../02-risikovurdering/tiltaksplan.md#t4--segmentering-og-herding-av-msp-verktøykjeden), [T6](../02-risikovurdering/tiltaksplan.md#t6--rollebasert-tilgangsstyring-og-periodisk-tilgangsrevisjon) |
-
----
+| Dokumenteier | Sikkerhetsansvarlig |
+| Godkjent av | Daglig leder |
+| Versjon | 2.0, gjeldende fra 1. september 2026 |
+| Revisjon | Årlig |
+| Hjemmel | ISO 27001 A.5.15, A.5.16, A.5.17, A.5.18, A.8.2 og A.8.5. GDPR artikkel 32. NSM Grunnprinsipper 2.6 |
+| Adresserer | R1, R5 og R8, gjennom tiltak T1, T4 og T6 |
 
 ## 1. Formål og omfang
 
-Sikre at tilgang til Mjøsdatas og kundenes systemer og data gis etter tjenstlig behov, kan spores til enkeltpersoner, og fjernes når behovet opphører.
+Formålet er å sikre at tilgang til Mjøsdatas og kundenes systemer og data gis etter tjenstlig behov, kan spores til enkeltpersoner, og fjernes når behovet opphører.
 
-Policyen gjelder alle ansatte, innleide konsulenter og systemkontoer i alle miljøer Mjøsdata administrerer — både egne og kunders.
-
----
+Policyen gjelder alle ansatte, innleide konsulenter og systemkontoer, i alle miljøer Mjøsdata administrerer. Det gjelder både selskapets egne miljøer og kundenes.
 
 ## 2. Prinsipper
 
-1. **Minste privilegium.** Ingen gis mer tilgang enn arbeidsoppgavene krever, og ikke lenger enn de krever den.
-2. **Behovsprøving per kunde.** Tilgang til ett kundemiljø gir aldri automatisk tilgang til andre. Dette er den enkeltbestemmelsen som skiller en MSP med kontroll fra en uten: uten den blir ett kompromittert brukernavn til alle kunders problem.
-3. **Individuell identitet.** Delte kontoer er forbudt. Systemkontoer skal ha navngitt eier og dokumentert formål.
-4. **Sporbarhet.** All privilegert aktivitet logges og skal kunne knyttes til en fysisk person.
+Minste privilegium. Ingen får mer tilgang enn arbeidsoppgavene krever, og ikke lenger enn de krever den.
 
----
+Behovsprøving per kunde. Tilgang til ett kundemiljø gir aldri automatisk tilgang til andre. Dette er den bestemmelsen som i praksis skiller en driftsleverandør med kontroll fra en uten. Uten den blir ett kompromittert brukernavn til alle kunders problem.
+
+Individuell identitet. Delte kontoer er ikke tillatt. Systemkontoer skal ha en navngitt eier og et dokumentert formål.
+
+Sporbarhet. All privilegert aktivitet logges, og skal kunne knyttes til en fysisk person.
 
 ## 3. Krav
 
-### 3.1 Autentisering
+### Autentisering
 
-| Krav | Detalj |
-|---|---|
-| MFA | Obligatorisk for alle brukerkontoer i alle systemer, uten unntak for «interne» systemer |
-| Phishing-resistent metode | Påkrevd for administratorer og supportpersonell (FIDO2/passkey). SMS og engangskoder aksepteres ikke for disse rollene |
-| Passord | Minimum 16 tegn. **Ingen** tvungen periodisk utskifting. Kontroll mot kjente kompromitterte passord ved etablering og endring |
-| Legacy-protokoller | Protokoller uten MFA-støtte skal være deaktivert i alle tenants |
+MFA er obligatorisk for alle brukerkontoer i alle systemer, også de som oppfattes som interne.
 
-> **Om passordreglene:** fravær av tvungen rotasjon er et bevisst valg i tråd med gjeldende anbefalinger fra NIST og NCSC. Periodisk utskifting gir målbart svakere passord fordi brukere kompenserer med forutsigbare varianter, og gir ingen dokumentert sikkerhetsgevinst når MFA og kompromitteringskontroll er på plass. Utskifting kreves derimot umiddelbart ved mistanke om kompromittering.
+Administratorer og supportpersonell skal bruke phishing-resistente metoder, altså FIDO2 eller passkey. Engangskoder på SMS godtas ikke for disse rollene.
 
-### 3.2 Privilegert tilgang
+Passord skal være minst 16 tegn. Det er ingen tvungen periodisk utskifting. Nye passord kontrolleres mot lister over kjente kompromitterte passord.
 
-- Stående administratortilgang er **ikke tillatt**. Privilegier aktiveres just-in-time via Entra Privileged Identity Management, med tidsbegrensning, begrunnelse og godkjenning.
-- Privilegert arbeid mot kundemiljøer utføres kun fra herdede administrasjonsarbeidsstasjoner (PAW). Samme maskin skal ikke brukes til e-post, nettlesing og administrasjon av kundemiljøer.
-- Nødtilgang («break glass») etableres som to dedikerte kontoer med lagret legitimasjon i forseglet fysisk oppbevaring, unntatt fra betinget tilgang, med varsling ved enhver bruk.
+Protokoller som ikke støtter MFA skal være deaktivert.
 
-### 3.3 Livssyklus
+At vi ikke krever periodisk bytte av passord er et bevisst valg, i tråd med gjeldende anbefalinger fra blant annet NIST og britiske NCSC. Tvungen utskifting gir målbart svakere passord, fordi folk kompenserer med forutsigbare varianter, og gevinsten er ikke dokumentert når MFA og kompromitteringskontroll er på plass. Bytte kreves derimot umiddelbart ved mistanke om at et passord er kompromittert.
 
-| Fase | Krav |
-|---|---|
-| **Onboarding** | Tilgang tildeles via rollemaler godkjent av nærmeste leder. Kundetilgang krever i tillegg godkjenning fra leveranseansvarlig for den aktuelle kunden |
-| **Endring** | Rollebytte utløser **full re-vurdering** av tilganger, ikke akkumulering av gamle rettigheter oppå nye. Dette er det vanligste opphavet til rettighetsspredning over tid |
-| **Offboarding** | Alle tilganger deaktiveres senest ved arbeidsforholdets slutt. Sjekklisten eies av HR med teknisk utførelse hos drift; gjennomføring bekreftes skriftlig innen 24 timer |
-| **Innleide** | Tilgang gis alltid med utløpsdato satt til kontraktens slutt, og forlenges aktivt ved behov — aldri som standardvalg |
+### Privilegert tilgang
 
-### 3.4 Revisjon
+Stående administratortilgang er ikke tillatt. Privilegier aktiveres ved behov gjennom Entra Privileged Identity Management, med tidsbegrensning, begrunnelse og godkjenning.
 
-- **Kvartalsvis tilgangsrevisjon:** hver leder bekrefter sine ansattes tilganger, og leveranseansvarlige bekrefter kundetilganger. Manglende bekreftelse innen fristen medfører at tilgangen fjernes, ikke at den videreføres.
-- Avvik lukkes innen 14 dager og rapporteres til sikkerhets- og personvernkomiteen.
-- Systemkontoer og deres eierskap gjennomgås halvårlig.
+Privilegert arbeid mot kundemiljøer gjøres bare fra herdede administrasjonsarbeidsstasjoner. Den samme maskinen skal ikke brukes til e-post, nettlesing og administrasjon av kundemiljøer.
 
----
+Det opprettes to kontoer for nødtilgang, med legitimasjon oppbevart forseglet fysisk. Disse er unntatt fra betinget tilgang, og all bruk utløser varsling.
+
+### Livssyklus
+
+Ved onboarding tildeles tilgang gjennom rollemaler som er godkjent av nærmeste leder. Tilgang til et kundemiljø krever i tillegg godkjenning fra leveranseansvarlig for den kunden.
+
+Ved rollebytte gjøres en full ny vurdering av tilgangene. Nye rettigheter legges ikke oppå de gamle. Akkumulering ved rollebytte er den vanligste grunnen til at rettigheter sprer seg over tid.
+
+Ved offboarding deaktiveres alle tilganger senest den dagen arbeidsforholdet slutter. Sjekklisten eies av HR, drift utfører det tekniske, og gjennomføringen bekreftes skriftlig innen 24 timer.
+
+Innleide får alltid tilgang med utløpsdato satt til kontraktens slutt. Forlengelse skal være en aktiv handling, ikke standardvalget.
+
+### Revisjon
+
+Hvert kvartal bekrefter hver leder tilgangene til sine egne ansatte, og leveranseansvarlige bekrefter kundetilgangene. Blir en tilgang ikke bekreftet innen fristen, fjernes den. Den videreføres altså ikke automatisk.
+
+Avvik lukkes innen 14 dager og rapporteres til sikkerhets- og personvernkomiteen. Systemkontoer og eierskapet til dem gjennomgås hvert halvår.
 
 ## 4. Unntak
 
-Unntak krever skriftlig, tidsbegrenset godkjenning fra sikkerhetsansvarlig, dokumenteres i avviksloggen med begrunnelse og kompenserende tiltak, og revurderes ved utløp. Et unntak som fornyes tre ganger skal behandles som et endringsbehov i policyen, ikke som et permanent unntak.
-
----
+Unntak krever skriftlig og tidsbegrenset godkjenning fra sikkerhetsansvarlig. De dokumenteres i avviksloggen med begrunnelse og kompenserende tiltak, og vurderes på nytt ved utløp. Et unntak som fornyes tre ganger bør behandles som et behov for å endre policyen, ikke som et permanent unntak.
 
 ## 5. Brudd på policyen
 
-Brudd behandles etter personalreglementet og meldes som sikkerhetshendelse etter [hendelsesresponsplanen](hendelsesresponsplan.md). Å melde fra om eget brudd behandles alltid mildere enn at bruddet oppdages av andre — det er en bevisst rutine, ikke en tilfeldighet, og henger sammen med rapporteringskulturen som bygges i [kap. 05](../05-sikkerhetskultur/opplaeringsprogram.md#4-atferdskampanje).
+Brudd behandles etter personalreglementet, og meldes som sikkerhetshendelse etter [hendelsesresponsplanen](hendelsesresponsplan.md).
+
+Å melde fra om eget brudd behandles alltid mildere enn at bruddet blir oppdaget av andre. Det er en bevisst rutine, og den henger sammen med rapporteringskulturen som bygges gjennom opplæringsprogrammet.

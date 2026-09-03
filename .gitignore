@@ -1,26 +1,22 @@
-# OS
+# Operativsystem
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Editors
+# Editorer
 .vscode/
 .idea/
 *.swp
-*~
 
-# Office temp files
+# Midlertidige Office-filer
 ~$*.docx
 ~$*.xlsx
 ~$*.pptx
 *.tmp
 
-# Local drafts and working notes not meant for publication
-/_drafts/
-/_scratch/
-*.draft.md
+# Lokale utkast og arbeidsnotater
+/_utkast/
+*.utkast.md
 
-# Exports
-/export/
-*.pdf
-!docs/**/*.pdf
+# Eksport
+/eksport/
